@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valentine 💖</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Floating Hearts Background -->
+  <div class="hearts" aria-hidden="true"></div>
+
+  <main class="wrap">
+    <section class="card">
+
+      <!-- STEP 1 -->
+      <div id="step1" class="step">
+        <div class="badge">💌 Valentine Special</div>
+        <h1 class="title">One Question…</h1>
+        <p class="subtitle">Type your lover’s name and make it official 😌</p>
+
+        <div class="inputRow">
+          <input id="loverName" type="text" placeholder="e.g. Priya ❤️" autocomplete="off" />
+          <button id="submitName" class="btn btn-primary">Go ✨</button>
+        </div>
+
+        <p class="hint">Tip: This will generate a shareable link 😄</p>
+      </div>
+
+      <!-- STEP 2 -->
+      <div id="step2" class="step hidden">
+        <div class="emojiBig">🥺👉👈</div>
+        <h2 id="questionText" class="question"></h2>
+
+        <div class="btnRow">
+          <button id="yesBtn" class="btn btn-primary">Yes 💘</button>
+          <button id="noBtn" class="btn btn-dark">No 💔</button>
+        </div>
+
+        <div class="miniActions">
+            <button id="copyLinkBtn2" class="btn btn-primary hidden">📋 Copy & Share</button>
+        </div>   
+      </div>
+
+      <!-- STEP 3 -->
+      <div id="step3" class="step hidden">
+        <div class="emojiBig">🎉💖🎉</div>
+        <h2 class="finalTitle">Best decision ever!</h2>
+        <p id="finalText" class="finalText"></p>       
+      </div>
+
+    </section>
+
+    <footer class="footer">
+        <button id="createNewBtn" class="footerBtn">Create New ✨</button>
+        <div>Made with ❤️ by <span class="glow">MJ</span></div>
+        
+    </footer>      
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
