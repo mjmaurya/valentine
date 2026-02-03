@@ -108,23 +108,29 @@ if (urlName && urlName.trim()) {
 
 // Submit name
 submitNameBtn.addEventListener("click", () => {
-  const name = loverNameInput.value.trim();
+    const name = loverNameInput.value.trim();
 
-  if (!name) {
-    alert("Enter a name first 😄");
-    return;
-  }
+    if (!name) {
+        alert("Enter a name first 😄");
+        return;
+    }
 
-  setNameInURL(name);
-showStep(2);
-updateQuestion(name);
+    setNameInURL(name);
+    showStep(2);
+    if (isCreator()) {
+        copyLinkBtn2.classList.add("hidden");
+    } else {
+        copyLinkBtn2.classList.remove("hidden");
+
+    }
+    updateQuestion(name);
 });
 
 // No button runs away 😈 (hover + click for mobile)
 
-  function moveNoButton() {
+function moveNoButton() {
+    // ✅ first time only: switch from normal to fixed (same place)
     if (!noBtnActivated) {
-      // ✅ first time only: switch from normal to fixed
       const rect = noBtn.getBoundingClientRect();
       noBtn.style.position = "fixed";
       noBtn.style.left = rect.left + "px";
@@ -135,7 +141,6 @@ updateQuestion(name);
   
     const btnWidth = noBtn.offsetWidth;
     const btnHeight = noBtn.offsetHeight;
-  
     const padding = 16;
   
     const viewportWidth = window.visualViewport
@@ -152,10 +157,46 @@ updateQuestion(name);
     const maxX = viewportWidth - btnWidth - padding;
     const maxY = viewportHeight - btnHeight - padding;
   
-    const x = Math.floor(minX + Math.random() * (maxX - minX));
-    const y = Math.floor(minY + Math.random() * (maxY - minY));
-    noBtn.style.left = `${x}px`;
-    noBtn.style.top = `${y}px`;
+    // ✅ YES button area to avoid (danger zone)
+    const yesRect = yesBtn.getBoundingClientRect();
+    const safeGap = 30; // keep distance from YES button
+  
+    const danger = {
+      left: yesRect.left - safeGap,
+      top: yesRect.top - safeGap,
+      right: yesRect.right + safeGap,
+      bottom: yesRect.bottom + safeGap
+    };
+  
+    // ✅ Try multiple times to find a non-overlapping position
+    for (let i = 0; i < 60; i++) {
+      const x = Math.floor(minX + Math.random() * (maxX - minX));
+      const y = Math.floor(minY + Math.random() * (maxY - minY));
+  
+      const noRect = {
+        left: x,
+        top: y,
+        right: x + btnWidth,
+        bottom: y + btnHeight
+      };
+  
+      const overlaps =
+        noRect.left < danger.right &&
+        noRect.right > danger.left &&
+        noRect.top < danger.bottom &&
+        noRect.bottom > danger.top;
+  
+      // ✅ If not overlapping, set position and return
+      if (!overlaps) {
+        noBtn.style.left = `${x}px`;
+        noBtn.style.top = `${y}px`;
+        return;
+      }
+    }
+  
+    // ✅ Fallback: if no safe spot found, send it to top-left (still safe)
+    noBtn.style.left = `${minX}px`;
+    noBtn.style.top = `${minY}px`;
   }
   
   
